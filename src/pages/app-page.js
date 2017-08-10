@@ -5,7 +5,7 @@ import { SET_TAGS } from '../constants'
 import MainHeader from '../components/main-header'
 import MainTagLi from '../components/main-tag-li'
 
-class App extends React.Component {
+class AppPage extends React.Component {
   componentDidMount() {
     this.props.getTags()
     // this.props.dispatch({
@@ -64,4 +64,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export default connector(App)
+export default connector(AppPage)

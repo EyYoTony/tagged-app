@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "^4.6.3",
     "jrs-react-components": "^2.1.2",
     "ramda": "^0.24.1",
     "react": "^15.6.1",
