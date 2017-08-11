@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { map } from 'ramda'
 import { SET_TAGS } from '../constants'
+import ProfileHeader from '../components/profile/profile-header'
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -11,19 +12,7 @@ class Profile extends React.Component {
   render() {
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
-        <header className="flex flex-row justify-between items-center bg-dark-green h3 b f3 fw6 pa3 mb2">
-          <div>{'<'}</div>
-          <div>Street Art Search</div>
-          <div className="pa4 tc">
-            <img
-              src={
-                'http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg'
-              }
-              className="br2 h2 w2 dib"
-              alt="avatar placeholder"
-            />
-          </div>
-        </header>
+        <ProfileHeader />
         <main className="flex flex-column tc w-100 vh-100 mt2">
           <div>
             <article className="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">

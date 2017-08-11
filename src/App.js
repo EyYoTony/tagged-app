@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 import AppPage from './pages/app-page'
 import Profile from './pages/profile'
-
+import NewTagForm from './pages/new-tag-form'
 // import Auth from './auth'
 import history from './history'
 
@@ -21,6 +21,7 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={AppPage} />
           <Route exact path="/profile/" component={Profile} />
+          <Route exact path="/tag/new" component={NewTagForm} />
         </Switch>
       </div>
     </BrowserRouter>

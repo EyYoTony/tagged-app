@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { map } from 'ramda'
 import { SET_TAGS } from '../constants'
-import MainHeader from '../components/main-header'
-import MainTagLi from '../components/main-tag-li'
+import MainHeader from '../components/app/main-header'
+import MainTagLi from '../components/app/main-tag-li'
 import TaggedMap from '../components/map'
 
 class AppPage extends React.Component {
