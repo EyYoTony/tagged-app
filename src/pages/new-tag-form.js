@@ -7,6 +7,7 @@ import {
   SET_POSITION,
   SET_TAG_PHOTO,
   SET_GEO,
+  ADD_TAG_TO_TAGS,
   CLEAR_TAG
 } from '../constants'
 import { TextField, Button } from 't63'
@@ -38,7 +39,10 @@ class NewTagForm extends React.Component {
         <main className="overflow-scroll flex flex-column tc w-100 vh-100 mt2">
           <h2 className="f4 f2-ns">New Tag</h2>
           <div id="form" className="center">
-            <form className="ph2" onSubmit={this.props.submitProfile}>
+            <form
+              className="ph2"
+              onSubmit={this.props.submitTag(this.props.history)}
+            >
               <div id="map" className="center">
                 <TaggedMap
                   center={this.props.geo}
@@ -98,6 +102,16 @@ class NewTagForm extends React.Component {
   }
 }
 
+const createTag = history => (dispatch, getState) => {
+  const outTag = {}
+  const props = getState()
+  console.log('props in thunk: ', props)
+  // fetch('http://localhost:5000/tags', {method: 'POST', body: data})
+  //   .then(res => res.json())
+  //   .then(() => dispatch({type: ADD_TAG_TO_TAGS, payload: data}))
+  //   .then(() => history.push('/profile'))
+}
+
 const mapStateToProps = state => {
   return {
     position: state.tag.position,
@@ -111,8 +125,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    submitProfile: e => {
+    submitTag: history => e => {
       e.preventDefault()
+      createTag(history)
     },
     handlePosition: e =>
       dispatch({ type: SET_POSITION, payload: e.target.value }),
