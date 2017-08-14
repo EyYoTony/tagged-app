@@ -12,7 +12,7 @@ class TaggedMap extends React.Component {
     return (
       <GoogleMap
         defaultZoom={zoom}
-        defaultCenter={center}
+        center={center}
         options={{ streetViewControl: false, mapTypeControl: false }}
       />
     )

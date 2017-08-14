@@ -1,14 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { map } from 'ramda'
-import { SET_TAGS } from '../constants'
+import { SET_TAGS, SET_GEO } from '../constants'
 import MainHeader from '../components/app/main-header'
 import MainTagLi from '../components/app/main-tag-li'
 import TaggedMap from '../components/map'
+import getCurrentPosition from '../geolocation'
 
 class AppPage extends React.Component {
   componentDidMount() {
     this.props.getTags()
+    getCurrentPosition(function(err, result, dispatch) {
+      if (err) {
+        /*handle error*/
+        console.log('There was an error getting the uer location: ', err)
+      }
+      dispatch({
+        type: SET_GEO,
+        payload: { lat: result.coords.latitude, lng: result.coords.longitude }
+      })
+    })(this.props)
   }
 
   render() {
@@ -22,7 +33,7 @@ class AppPage extends React.Component {
         <main className="flex flex-column tc w-100 vh-100 mt2">
           <div id="map" className="center">
             <TaggedMap
-              center={location}
+              center={this.props.geo}
               zoom={16}
               containerElement={
                 <div style={{ height: '400px', width: '500px' }} />
@@ -54,7 +65,8 @@ const asyncFetchTags = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    tags: state.tags
+    tags: state.tags,
+    geo: state.geo
   }
 }
 

@@ -1,5 +1,5 @@
-//This code was taken from tripott - https://github.com/tripott/pro-log-fishing/blob/master/src/geolocation.js
-/*const getCurrentPosition = cb => {
+//This code was taken and modified from tripott - https://github.com/tripott/pro-log-fishing/blob/master/src/geolocation.js
+const getCurrentPosition = cb => props => {
   let pos = {}
   let err = {}
   if (navigator.geolocation) {
@@ -10,18 +10,15 @@
       maximumAge: 0
     })
     if (err.message) return cb(err)
-    cb(null, pos)
+    //cb(null, pos, props.dispatch)
   } else {
     err.message = 'not supported'
     return cb(err)
   }
 
   function displayPosition(position) {
-    console.log('displayPosition: ', position)
-    dispatch({
-      type: SET_LOG_ENTRY_POSITION,
-      payload: { lat: pos.coords.latitude, lng: pos.coords.longitude }
-    })
+    //for some reason it could not see dispatch through the cb function, so have to pass it through manually
+    cb(null, position, props.dispatch)
   }
 
   function displayError(error) {
@@ -35,4 +32,4 @@
   }
 }
 
-export default getCurrentPosition*/
+export default getCurrentPosition

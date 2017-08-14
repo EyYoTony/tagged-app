@@ -19,21 +19,19 @@ import getCurrentPosition from '../geolocation'
 class NewTagForm extends React.Component {
   componentDidMount() {
     this.props.clearTag()
-    /*getCurrentPosition(function(err, result) {
+    getCurrentPosition(function(err, result, dispatch) {
       if (err) {
-        /*handle error
+        /*handle error*/
+        console.log('There was an error getting the uer location: ', err)
       }
-      console.log('result', result)
-      this.dispatch({ tyep: SET_GEO, payload: result })
-    })
-  */
+      dispatch({
+        type: SET_GEO,
+        payload: { lat: result.coords.latitude, lng: result.coords.longitude }
+      })
+    })(this.props)
   }
 
   render() {
-    const location = {
-      lat: 32.7765,
-      lng: -79.9311
-    }
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
         <FormHeader />
@@ -43,13 +41,13 @@ class NewTagForm extends React.Component {
             <form className="ph2" onSubmit={this.props.submitProfile}>
               <div id="map" className="center">
                 <TaggedMap
-                  center={location}
+                  center={this.props.geo}
                   zoom={16}
                   containerElement={
-                    <div style={{ height: '400px', width: '500px' }} />
+                    <div style={{ height: '420px', width: '450px' }} />
                   }
                   mapElement={
-                    <div style={{ height: '400px', width: '500px' }} />
+                    <div style={{ height: '400px', width: '450px' }} />
                   }
                   markers={[]}
                 />
@@ -70,7 +68,7 @@ class NewTagForm extends React.Component {
                 <label className="f6 b db mb2">Photo (optional)</label>
                 <div className="flex justify-center pv4">
                   <img
-                    className="h3 w3 ba pa2 br2 mr2"
+                    className="h4 w4 ba pa2 br2 mr2"
                     src={
                       this.props.photo
                         ? this.props.photo
@@ -105,7 +103,8 @@ const mapStateToProps = state => {
     position: state.tag.position,
     artTitle: state.tag.artTitle,
     artist: state.tag.artist,
-    photo: state.tag.photo
+    photo: state.tag.photo,
+    geo: state.geo
   }
 }
 
@@ -122,7 +121,6 @@ const mapDispatchToProps = dispatch => {
     handleArtist: e => dispatch({ type: SET_ARTIST, payload: e.target.value }),
     handlePhoto: (e, results) => {
       const blob = compose(path(['target', 'result']), head, head)(results)
-      console.log('blob:', blob)
       dispatch({ type: 'SET_TAG_PHOTO', payload: blob })
     },
     clearTag: () => dispatch({ type: CLEAR_TAG })
