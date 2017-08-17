@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { map } from 'ramda'
 import { SET_TAGS } from '../constants'
 import ProfileHeader from '../components/profile/profile-header'
+import ProfileTagLi from '../components/profile/profile-tag-li'
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -37,36 +38,7 @@ class Profile extends React.Component {
             <h2 className="f3 fw6 pa3 mt0 bb b--black-10">Art You Mapped</h2>
           </div>
           <div className="mw6 center">
-            <article>
-              <div className="dtc">
-                <img
-                  src={
-                    'https://fastestpedestrian.files.wordpress.com/2014/06/img_7374.jpg'
-                  }
-                  className="br-100 w4 h4 mr4"
-                />
-              </div>
-              <div className="dtc v-mid pl2">
-                <h1 className="f6 f5-ns fw6 lh-title black mv0">
-                  College Lodge Mural
-                </h1>
-                <h2 className="f6 fw4 mt2 mb0 black-60">
-                  Shepard Fairey
-                </h2>
-                <dl className="mt2 f6">
-                  <dt className="clip">Distance</dt>
-                  <dd className="ml0">5 mi.</dd>
-                </dl>
-              </div>
-              <div className="dtc v-mid pl2">
-                <a
-                  className="f5 tc br1 link ml4 db br1 bw2 ph3 pv3 mb2 white bg-dark-green hover-bg-green"
-                  href="#0"
-                >
-                  Edit
-                </a>
-              </div>
-            </article>
+            {map(tag => ProfileTagLi(tag), this.props.tags)}
           </div>
         </main>
       </div>
@@ -74,7 +46,7 @@ class Profile extends React.Component {
   }
 }
 
-const asyncFetchMyTags = dispatch => {
+const asyncFetchMyTags = (dispatch, getState) => {
   fetch('http://localhost:5000/tags?filter=creatorName:EyYoTony')
     .then(res => res.json())
     .then(res => dispatch({ type: SET_TAGS, payload: res }))
@@ -93,7 +65,7 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch,
     getMyTags: () => {
-      asyncFetchMyTags(dispatch)
+      dispatch(asyncFetchMyTags)
     }
   }
 }

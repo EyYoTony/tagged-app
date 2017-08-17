@@ -54,7 +54,7 @@ class AppPage extends React.Component {
   }
 }
 
-const asyncFetchTags = dispatch => {
+const asyncFetchTags = (dispatch, getState) => {
   fetch('http://localhost:5000/tags')
     .then(res => res.json())
     .then(res => dispatch({ type: SET_TAGS, payload: res }))
@@ -74,7 +74,7 @@ const mapDispatchToProps = dispatch => {
   return {
     dispatch,
     getTags: () => {
-      asyncFetchTags(dispatch)
+      dispatch(asyncFetchTags)
     }
   }
 }

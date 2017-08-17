@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { head, path, compose } from 'ramda'
+import { head, path, compose, assoc } from 'ramda'
 import {
   SET_ART_TITLE,
   SET_ARTIST,
@@ -108,12 +108,17 @@ class NewTagForm extends React.Component {
 }
 
 const createTag = history => (dispatch, getState) => {
-  const outTag = getState().tag
-  console.log('thunk is getting hit')
-  //fetch('http://localhost:5000/tags', { method: 'POST', body: outTag })
-  //  .then(res => res.json())
-  //  .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
-  //  .then(() => history.push('/profile'))
+  var outTag = getState().tag
+  outTag = assoc('position', getState().geo, outTag)
+  console.log('outTag: ', outTag)
+  fetch('http://localhost:5000/tags', {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+    body: JSON.stringify(outTag)
+  })
+    .then(res => res.json())
+    .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
+    .then(() => history.push('/profile'))
 }
 
 const mapStateToProps = state => {
