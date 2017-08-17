@@ -79,14 +79,19 @@ class NewTagForm extends React.Component {
                         : "https://placehold.it/64x64?text='photo'"
                     }
                   />
-                  <FileInput
-                    className="pv3 ml2"
-                    onChange={this.props.handlePhoto}
-                  >
-                    <Button className="bg-green ba br2 b--light-green black">
-                      Upload
-                    </Button>
-                  </FileInput>
+                  <div id="file-input">
+                    <FileInput
+                      className="pv3 ml2"
+                      onChange={this.props.handlePhoto}
+                    >
+                      <Button
+                        type="button"
+                        className="bg-green ba br2 b--light-green black"
+                      >
+                        Upload
+                      </Button>
+                    </FileInput>
+                  </div>
                 </div>
               </div>
               <div className="">
@@ -103,13 +108,12 @@ class NewTagForm extends React.Component {
 }
 
 const createTag = history => (dispatch, getState) => {
-  const outTag = {}
-  const props = getState()
-  console.log('props in thunk: ', props)
-  // fetch('http://localhost:5000/tags', {method: 'POST', body: data})
-  //   .then(res => res.json())
-  //   .then(() => dispatch({type: ADD_TAG_TO_TAGS, payload: data}))
-  //   .then(() => history.push('/profile'))
+  const outTag = getState().tag
+  console.log('thunk is getting hit')
+  //fetch('http://localhost:5000/tags', { method: 'POST', body: outTag })
+  //  .then(res => res.json())
+  //  .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
+  //  .then(() => history.push('/profile'))
 }
 
 const mapStateToProps = state => {
@@ -127,7 +131,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     submitTag: history => e => {
       e.preventDefault()
-      createTag(history)
+      dispatch(createTag(history))
     },
     handlePosition: e =>
       dispatch({ type: SET_POSITION, payload: e.target.value }),

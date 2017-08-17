@@ -19,6 +19,7 @@ const emptyTag = {
   photo: '',
   artist: ''
 }
+
 export default (state = emptyTag, action) => {
   switch (action.type) {
     case SET_TAG:
