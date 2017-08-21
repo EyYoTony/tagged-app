@@ -4,6 +4,7 @@ import { map } from 'ramda'
 import { SET_TAGS } from '../constants'
 import ProfileHeader from '../components/profile/profile-header'
 import ProfileTagLi from '../components/profile/profile-tag-li'
+import Auth from '../auth'
 
 class Profile extends React.Component {
   componentDidMount() {
@@ -11,6 +12,7 @@ class Profile extends React.Component {
   }
 
   render() {
+    const auth = Auth()
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
         <ProfileHeader />
@@ -31,6 +33,12 @@ class Profile extends React.Component {
                 >
                   Edit Profile
                 </a>
+                <button
+                  className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-red hover-bg-dark-red"
+                  onClick={auth.logout}
+                >
+                  log out
+                </button>
               </div>
             </article>
           </div>
