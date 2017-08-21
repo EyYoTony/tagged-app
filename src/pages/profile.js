@@ -4,6 +4,7 @@ import { map } from 'ramda'
 import { SET_TAGS } from '../constants'
 import ProfileHeader from '../components/profile/profile-header'
 import ProfileTagLi from '../components/profile/profile-tag-li'
+import ProfileCard from '../components/profile/profile-card'
 import Auth from '../auth'
 
 class Profile extends React.Component {
@@ -11,36 +12,19 @@ class Profile extends React.Component {
     this.props.getMyTags()
   }
 
+  confirmLogOut = () => {
+    if (window.confirm('are you sure you want to log out?')) {
+      Auth().logout()
+    }
+  }
+
   render() {
-    const auth = Auth()
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
         <ProfileHeader />
         <main className="flex flex-column tc w-100 vh-100 mt2">
           <div>
-            <article className="mw5 center bg-white br3 pa3 pa4-ns mv3 ba b--black-10">
-              <div className="tc">
-                <img
-                  src="http://beverlypress.com/wp-content/uploads/2016/07/hot-dog-06.jpg"
-                  className="br-100 h4 w4 dib ba b--black-05 pa2"
-                  title="placeholder avatar"
-                />
-                <h1 className="f3 mb2">EyYoTony</h1>
-                <h2 className="f5 fw4 gray mt0">Alexander Swanson</h2>
-                <a
-                  className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-dark-green hover-bg-green"
-                  href="#0"
-                >
-                  Edit Profile
-                </a>
-                <button
-                  className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-red hover-bg-dark-red"
-                  onClick={auth.logout}
-                >
-                  log out
-                </button>
-              </div>
-            </article>
+            {ProfileCard(this.confirmLogOut)(this.props.session.profile)}
           </div>
           <div>
             <h2 className="f3 fw6 pa3 mt0 bb b--black-10">Art You Mapped</h2>
@@ -65,7 +49,8 @@ const asyncFetchMyTags = (dispatch, getState) => {
 
 const mapStateToProps = state => {
   return {
-    tags: state.tags
+    tags: state.tags,
+    session: state.session
   }
 }
 

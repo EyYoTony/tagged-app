@@ -1,8 +1,10 @@
-import { SET_GEO } from '../constants'
+import { SET_SESSION } from '../constants'
 
 export default (state = { access_token: '' }, action) => {
-  return cond([
-    [equals(SET_SESSION), always(action.payload)],
-    [T, always(state)]
-  ])(action.type)
+  switch (action.type) {
+    case SET_SESSION:
+      return action.payload
+    default:
+      return state
+  }
 }

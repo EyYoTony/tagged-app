@@ -5,7 +5,7 @@ import React from 'react'
 const Callback = props => {
   return (
     <div>
-      <img src="https://www.fillmurray.com/200/200" alt="loading" />
+      <header className="flex flex-row justify-between items-center bg-dark-green h3 b f3 fw6 pa3 mb2" />
     </div>
   )
 }
