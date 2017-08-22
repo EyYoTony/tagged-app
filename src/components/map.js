@@ -14,7 +14,14 @@ class TaggedMap extends React.Component {
         defaultZoom={zoom}
         center={center}
         options={{ streetViewControl: false, mapTypeControl: false }}
-      />
+      >
+        {this.props.markers.map((marker, index) =>
+          <Marker
+            {...marker}
+            //onRightClick={() => this.props.onMarkerRightClick(index)}
+          />
+        )}
+      </GoogleMap>
     )
   }
 }
