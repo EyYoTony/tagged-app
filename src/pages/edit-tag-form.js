@@ -9,7 +9,7 @@ import {
 } from '../constants'
 import { TextField, Button } from 't63'
 import FileInput from '../components/file-input'
-import FormHeader from '../components/form-header'
+import FormHeader from '../components/form/form-header'
 import TaggedMap from '../components/map'
 
 //onSubmit={props.submitProfile(props.history)(props.match.params.id)} line - 21
@@ -92,17 +92,17 @@ class EditTagForm extends React.Component {
 }
 
 const editTag = history => (dispatch, getState) => {
-  var outTag = getState().tag
-  outTag = assoc('position', getState().geo, outTag)
-  console.log('outTag: ', outTag)
-  fetch('http://localhost:5000/tags', {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify(outTag)
-  })
-    .then(res => res.json())
-    .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
-    .then(() => history.push('/profile'))
+  // var outTag = getState().tag
+  // outTag = assoc('position', getState().geo, outTag)
+  // console.log('outTag: ', outTag)
+  // fetch('http://localhost:5000/tags', {
+  //   headers: { 'Content-Type': 'application/json' },
+  //   method: 'POST',
+  //   body: JSON.stringify(outTag)
+  // })
+  //   .then(res => res.json())
+  //   .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
+  //   .then(() => history.push('/profile'))
 }
 
 const mapStateToProps = state => {

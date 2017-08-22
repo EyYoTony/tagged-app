@@ -1,5 +1,6 @@
 export const SET_TAG = 'SET_TAG'
 export const SET_TAGS = 'SET_TAGS'
+export const SET_PROFILE_TAGS = 'SET_PROFILE_TAGS'
 export const SET_POSITION = 'SET_POSITION'
 export const SET_ART_TITLE = 'SET_ART_TITLE'
 export const SET_CREATOR_ID = 'SET_CREATOR_ID'

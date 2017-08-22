@@ -11,8 +11,9 @@ import {
   CLEAR_TAG
 } from '../constants'
 import { TextField, Button } from 't63'
+import formatUserId from '../components/format-user-id'
 import FileInput from '../components/file-input'
-import FormHeader from '../components/form-header'
+import FormHeader from '../components/form/form-header'
 import TaggedMap from '../components/map'
 import getCurrentPosition from '../geolocation'
 
@@ -108,8 +109,11 @@ class NewTagForm extends React.Component {
 }
 
 const createTag = history => (dispatch, getState) => {
+  const profile = getState().session.profile
   var outTag = getState().tag
   outTag = assoc('position', getState().geo, outTag)
+  outTag = assoc('creatorName', profile.nickname, outTag)
+  outTag = assoc('creatorId', formatUserId(profile.sub), outTag)
   console.log('outTag: ', outTag)
   fetch('http://localhost:5000/tags', {
     headers: { 'Content-Type': 'application/json' },

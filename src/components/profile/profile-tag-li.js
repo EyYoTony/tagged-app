@@ -22,7 +22,7 @@ const ProfileTagLi = tagObj => {
       <div className="dtc v-mid pl2">
         <a
           className="f5 tc br1 link ml4 db br1 bw2 ph3 pv3 mb2 white bg-dark-green hover-bg-green"
-          href="#0"
+          href={`/tag/${tagObj._id}`}
         >
           Edit
         </a>

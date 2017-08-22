@@ -16,12 +16,6 @@ const ProfileCard = confirmLogOut => profile => {
           {profile.name}
         </h2>
         <a
-          className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-dark-green hover-bg-green"
-          href="#0"
-        >
-          Edit Profile
-        </a>
-        <a
           className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-red hover-bg-dark-red"
           onClick={confirmLogOut}
           href="/"
@@ -34,3 +28,10 @@ const ProfileCard = confirmLogOut => profile => {
 }
 
 export default ProfileCard
+
+// <a
+//   className="f6 tc link mt1 db br1 bw2 ph3 pv2 mb2 white bg-dark-green hover-bg-green"
+//   href="#0"
+// >
+//   Edit Profile
+// </a>

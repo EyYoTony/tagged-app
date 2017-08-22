@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { map } from 'ramda'
-import { SET_TAGS } from '../constants'
+import { SET_PROFILE_TAGS } from '../constants'
+import formatUserId from '../components/format-user-id'
 import ProfileHeader from '../components/profile/profile-header'
 import ProfileTagLi from '../components/profile/profile-tag-li'
 import ProfileCard from '../components/profile/profile-card'
@@ -30,7 +31,7 @@ class Profile extends React.Component {
             <h2 className="f3 fw6 pa3 mt0 bb b--black-10">Art You Mapped</h2>
           </div>
           <div className="mw6 center">
-            {map(tag => ProfileTagLi(tag), this.props.tags)}
+            {map(tag => ProfileTagLi(tag), this.props.profileTags)}
           </div>
         </main>
       </div>
@@ -39,9 +40,11 @@ class Profile extends React.Component {
 }
 
 const asyncFetchMyTags = (dispatch, getState) => {
-  fetch('http://localhost:5000/tags?filter=creatorName:EyYoTony')
+  const userId = formatUserId(getState().session.profile.sub)
+  console.log(userId)
+  fetch(`http://localhost:5000/tags?filter=creatorId:${userId}`)
     .then(res => res.json())
-    .then(res => dispatch({ type: SET_TAGS, payload: res }))
+    .then(res => dispatch({ type: SET_PROFILE_TAGS, payload: res }))
     .catch(error => {
       console.error(error)
     })
@@ -49,7 +52,7 @@ const asyncFetchMyTags = (dispatch, getState) => {
 
 const mapStateToProps = state => {
   return {
-    tags: state.tags,
+    profileTags: state.profileTags,
     session: state.session
   }
 }
