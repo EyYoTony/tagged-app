@@ -5,33 +5,16 @@ import {
   SET_ART_TITLE,
   SET_ARTIST,
   SET_POSITION,
-  SET_TAG_PHOTO,
-  SET_GEO,
-  ADD_TAG_TO_TAGS,
-  CLEAR_TAG
+  SET_TAG_PHOTO
 } from '../constants'
 import { TextField, Button } from 't63'
-import formatUserId from '../components/format-user-id'
 import FileInput from '../components/file-input'
 import FormHeader from '../components/form/form-header'
 import TaggedMap from '../components/map'
-import getCurrentPosition from '../geolocation'
 
 //onSubmit={props.submitProfile(props.history)(props.match.params.id)} line - 21
-class NewTagForm extends React.Component {
-  componentDidMount() {
-    this.props.clearTag()
-    getCurrentPosition(function(err, result, dispatch) {
-      if (err) {
-        /*handle error*/
-        console.log('There was an error getting the uer location: ', err)
-      }
-      dispatch({
-        type: SET_GEO,
-        payload: { lat: result.coords.latitude, lng: result.coords.longitude }
-      })
-    })(this.props)
-  }
+class EditTagForm extends React.Component {
+  componentDidMount() {}
 
   render() {
     return (
@@ -54,14 +37,7 @@ class NewTagForm extends React.Component {
                   mapElement={
                     <div style={{ height: '400px', width: '450px' }} />
                   }
-                  markers={[
-                    {
-                      position: this.props.geo,
-                      key: `user_location`,
-                      defaultAnimation: 2,
-                      icon: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAABVElEQVR42jWQPUtCYRiGbz9OapCGfeDxUEYZKTS0nKE0IQUpaLEv+4DUWl1CygaJ/oBEQ2lBi1OTQjUE1iKBJ4KiKRKi1aHfcJ7e55Tv+l7cz3XfAL8R2L3L2Ajs2R6Dua4PX8r02htGUfJAFb9WdCBfxhqNn/i1ndsQbd1PUqzSR4G8hdxz0KwKooIyQ17CZvzU36x9XeiNdo3KrUPKPkdovjpIwYJJd6nQ0A8ZfG73LkSNdpVefup0/V2ko/cVSj6M0/Slg+QESBpACuzE58qtvAGdfeZo/22B1upjNHPloOE0yKagBBZnp6w2ayQdCCjzNEWLNzKp5xIp6yJRFiC3mxDi7MTnVkUSQ+GKgwLHIHcEZHFiG9IQVNGuGSxAZyc+x0kMeRLQ7aOiTLcowzvxBE7RjsXZSUn+JRmQCzFjnv9n5gm4nSTExdAlS49oCng70C9TDYyoJxj9ZwAAAABJRU5ErkJggg==`
-                    }
-                  ]}
+                  markers={[]}
                 />
               </div>
               <TextField
@@ -115,21 +91,18 @@ class NewTagForm extends React.Component {
   }
 }
 
-const createTag = history => (dispatch, getState) => {
-  const profile = getState().session.profile
-  var outTag = getState().tag
-  outTag = assoc('position', getState().geo, outTag)
-  outTag = assoc('creatorName', profile.nickname, outTag)
-  outTag = assoc('creatorId', formatUserId(profile.sub), outTag)
-  console.log('outTag: ', outTag)
-  fetch('http://localhost:5000/tags', {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify(outTag)
-  })
-    .then(res => res.json())
-    .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
-    .then(() => history.push('/profile'))
+const editTag = history => (dispatch, getState) => {
+  // var outTag = getState().tag
+  // outTag = assoc('position', getState().geo, outTag)
+  // console.log('outTag: ', outTag)
+  // fetch('http://localhost:5000/tags', {
+  //   headers: { 'Content-Type': 'application/json' },
+  //   method: 'POST',
+  //   body: JSON.stringify(outTag)
+  // })
+  //   .then(res => res.json())
+  //   .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
+  //   .then(() => history.push('/profile'))
 }
 
 const mapStateToProps = state => {
@@ -147,7 +120,7 @@ const mapDispatchToProps = dispatch => {
     dispatch,
     submitTag: history => e => {
       e.preventDefault()
-      dispatch(createTag(history))
+      dispatch(editTag(history))
     },
     handlePosition: e =>
       dispatch({ type: SET_POSITION, payload: e.target.value }),
@@ -157,10 +130,9 @@ const mapDispatchToProps = dispatch => {
     handlePhoto: (e, results) => {
       const blob = compose(path(['target', 'result']), head, head)(results)
       dispatch({ type: 'SET_TAG_PHOTO', payload: blob })
-    },
-    clearTag: () => dispatch({ type: CLEAR_TAG })
+    }
   }
 }
 
 const connector = connect(mapStateToProps, mapDispatchToProps)
-export default connector(NewTagForm)
+export default connector(EditTagForm)

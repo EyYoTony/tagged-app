@@ -29,7 +29,7 @@ class AppPage extends React.Component {
     }
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
-        <MainHeader />
+        {MainHeader(this.props.session)}
         <main className="flex flex-column tc w-100 vh-100 mt2">
           <div id="map" className="center">
             <TaggedMap
@@ -66,7 +66,8 @@ const asyncFetchTags = (dispatch, getState) => {
 const mapStateToProps = state => {
   return {
     tags: state.tags,
-    geo: state.geo
+    geo: state.geo,
+    session: state.session
   }
 }
 

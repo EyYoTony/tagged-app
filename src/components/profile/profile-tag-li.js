@@ -3,7 +3,7 @@ import React from 'react'
 
 const ProfileTagLi = tagObj => {
   return (
-    <article>
+    <article className="link dt w-100 bb b--black-10 pb2 mt2 blue">
       <div className="dtc">
         <img src={tagObj.photo} className="br-100 w4 h4 mr4" alt="tag photo" />
       </div>
@@ -22,13 +22,17 @@ const ProfileTagLi = tagObj => {
       <div className="dtc v-mid pl2">
         <a
           className="f5 tc br1 link ml4 db br1 bw2 ph3 pv3 mb2 white bg-dark-green hover-bg-green"
-          href="#0"
+          href={`/tag/${tagObj._id}`}
         >
           Edit
         </a>
         <a
           className="f5 tc br1 link ml4 db br1 bw2 ph3 pv3 mb2 white bg-red hover-bg-dark-red"
-          href="#0"
+          onClick={e =>
+            fetch(`http://localhost:5000/tags/${tagObj._id}`, {
+              method: 'DELETE'
+            })}
+          href="/profile/"
         >
           Delete
         </a>
