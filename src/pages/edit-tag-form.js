@@ -5,7 +5,9 @@ import {
   SET_ART_TITLE,
   SET_ARTIST,
   SET_POSITION,
-  SET_TAG_PHOTO
+  SET_TAG_PHOTO,
+  SET_TAG,
+  SET_GEO
 } from '../constants'
 import { TextField, Button } from 't63'
 import FileInput from '../components/file-input'
@@ -14,7 +16,10 @@ import TaggedMap from '../components/map'
 
 //onSubmit={props.submitProfile(props.history)(props.match.params.id)} line - 21
 class EditTagForm extends React.Component {
-  componentDidMount() {}
+  componentDidMount() {
+    const tagId = this.props.match.params.id
+    this.props.getMyTag(tagId)
+  }
 
   render() {
     return (
@@ -105,6 +110,18 @@ const editTag = history => (dispatch, getState) => {
   //   .then(() => history.push('/profile'))
 }
 
+const asyncFetchMyTag = tagId => (dispatch, getState) => {
+  fetch(`http://localhost:5000/tags/${tagId}`)
+    .then(res => res.json())
+    .then(res => {
+      dispatch({ type: SET_TAG, payload: res })
+      dispatch({ type: SET_GEO, payload: res.position })
+    })
+    .catch(error => {
+      console.error(error)
+    })
+}
+
 const mapStateToProps = state => {
   return {
     position: state.tag.position,
@@ -118,6 +135,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
+    getMyTag: tagId => {
+      dispatch(asyncFetchMyTag(tagId))
+    },
     submitTag: history => e => {
       e.preventDefault()
       dispatch(editTag(history))

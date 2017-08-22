@@ -41,7 +41,6 @@ class Profile extends React.Component {
 
 const asyncFetchMyTags = (dispatch, getState) => {
   const userId = formatUserId(getState().session.profile.sub)
-  console.log(userId)
   fetch(`http://localhost:5000/tags?filter=creatorId:${userId}`)
     .then(res => res.json())
     .then(res => dispatch({ type: SET_PROFILE_TAGS, payload: res }))
