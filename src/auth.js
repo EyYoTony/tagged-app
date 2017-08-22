@@ -1,4 +1,4 @@
-import auth0 from 'auth0-js'
+//import auth0 from 'auth0-js'
 import history from './history'
 
 import { SET_SESSION } from './constants'

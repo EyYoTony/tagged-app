@@ -5,7 +5,7 @@ const ProfileTagLi = tagObj => {
   return (
     <article className="link dt w-100 bb b--black-10 pb2 mt2 blue">
       <div className="dtc">
-        <img src={tagObj.photo} className="br-100 w4 h4 mr4" alt="tag photo" />
+        <img src={tagObj.photo} className="br-100 w4 h4 mr4" alt="tag" />
       </div>
       <div className="dtc v-mid pl2">
         <h1 className="f6 f5-ns fw6 lh-title black mv0">
@@ -14,10 +14,6 @@ const ProfileTagLi = tagObj => {
         <h2 className="f6 fw4 mt2 mb0 black-60">
           {tagObj.artist}
         </h2>
-        <dl className="mt2 f6">
-          <dt className="clip">Distance</dt>
-          <dd className="ml0">5 mi.</dd>
-        </dl>
       </div>
       <div className="dtc v-mid pl2">
         <a
@@ -42,3 +38,8 @@ const ProfileTagLi = tagObj => {
 }
 
 export default ProfileTagLi
+
+// <dl className="mt2 f6">
+//   <dt className="clip">Distance</dt>
+//   <dd className="ml0">5 mi.</dd>
+// </dl>

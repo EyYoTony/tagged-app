@@ -42,7 +42,14 @@ class EditTagForm extends React.Component {
                   mapElement={
                     <div style={{ height: '400px', width: '450px' }} />
                   }
-                  markers={[]}
+                  markers={[
+                    {
+                      position: this.props.geo,
+                      key: `user_location`,
+                      defaultAnimation: 2,
+                      icon: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAABVElEQVR42jWQPUtCYRiGbz9OapCGfeDxUEYZKTS0nKE0IQUpaLEv+4DUWl1CygaJ/oBEQ2lBi1OTQjUE1iKBJ4KiKRKi1aHfcJ7e55Tv+l7cz3XfAL8R2L3L2Ajs2R6Dua4PX8r02htGUfJAFb9WdCBfxhqNn/i1ndsQbd1PUqzSR4G8hdxz0KwKooIyQ17CZvzU36x9XeiNdo3KrUPKPkdovjpIwYJJd6nQ0A8ZfG73LkSNdpVefup0/V2ko/cVSj6M0/Slg+QESBpACuzE58qtvAGdfeZo/22B1upjNHPloOE0yKagBBZnp6w2ayQdCCjzNEWLNzKp5xIp6yJRFiC3mxDi7MTnVkUSQ+GKgwLHIHcEZHFiG9IQVNGuGSxAZyc+x0kMeRLQ7aOiTLcowzvxBE7RjsXZSUn+JRmQCzFjnv9n5gm4nSTExdAlS49oCng70C9TDYyoJxj9ZwAAAABJRU5ErkJggg==`
+                    }
+                  ]}
                 />
               </div>
               <TextField
@@ -62,6 +69,7 @@ class EditTagForm extends React.Component {
                 <div className="flex justify-center pv4">
                   <img
                     className="h4 w4 ba pa2 br2 mr2"
+                    alt="tag"
                     src={
                       this.props.photo
                         ? this.props.photo
@@ -97,17 +105,15 @@ class EditTagForm extends React.Component {
 }
 
 const editTag = history => (dispatch, getState) => {
-  // var outTag = getState().tag
-  // outTag = assoc('position', getState().geo, outTag)
-  // console.log('outTag: ', outTag)
-  // fetch('http://localhost:5000/tags', {
-  //   headers: { 'Content-Type': 'application/json' },
-  //   method: 'POST',
-  //   body: JSON.stringify(outTag)
-  // })
-  //   .then(res => res.json())
-  //   .then(() => dispatch({ type: ADD_TAG_TO_TAGS, payload: outTag }))
-  //   .then(() => history.push('/profile'))
+  var outTag = getState().tag
+  outTag = assoc('position', getState().geo, outTag)
+  fetch(`http://localhost:5000/tags/${outTag._id}`, {
+    headers: { 'Content-Type': 'application/json' },
+    method: 'PUT',
+    body: JSON.stringify(outTag)
+  })
+    .then(res => res.json())
+    .then(() => history.push('/profile'))
 }
 
 const asyncFetchMyTag = tagId => (dispatch, getState) => {
@@ -149,7 +155,7 @@ const mapDispatchToProps = dispatch => {
     handleArtist: e => dispatch({ type: SET_ARTIST, payload: e.target.value }),
     handlePhoto: (e, results) => {
       const blob = compose(path(['target', 'result']), head, head)(results)
-      dispatch({ type: 'SET_TAG_PHOTO', payload: blob })
+      dispatch({ type: SET_TAG_PHOTO, payload: blob })
     }
   }
 }

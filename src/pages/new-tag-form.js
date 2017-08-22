@@ -81,6 +81,7 @@ class NewTagForm extends React.Component {
                 <div className="flex justify-center pv4">
                   <img
                     className="h4 w4 ba pa2 br2 mr2"
+                    alt="tag"
                     src={
                       this.props.photo
                         ? this.props.photo
@@ -156,7 +157,7 @@ const mapDispatchToProps = dispatch => {
     handleArtist: e => dispatch({ type: SET_ARTIST, payload: e.target.value }),
     handlePhoto: (e, results) => {
       const blob = compose(path(['target', 'result']), head, head)(results)
-      dispatch({ type: 'SET_TAG_PHOTO', payload: blob })
+      dispatch({ type: SET_TAG_PHOTO, payload: blob })
     },
     clearTag: () => dispatch({ type: CLEAR_TAG })
   }

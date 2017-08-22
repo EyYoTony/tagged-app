@@ -23,10 +23,6 @@ class AppPage extends React.Component {
   }
 
   render() {
-    const location = {
-      lat: 32.7765,
-      lng: -79.9311
-    }
     return (
       <div className="flex flex-column justify-between vh-100 w-100 avenir bg-white">
         {MainHeader(this.props.session)}
@@ -39,7 +35,14 @@ class AppPage extends React.Component {
                 <div style={{ height: '400px', width: '500px' }} />
               }
               mapElement={<div style={{ height: '400px', width: '500px' }} />}
-              markers={[]}
+              markers={[
+                {
+                  position: this.props.geo,
+                  key: `user_location`,
+                  defaultAnimation: 2,
+                  icon: `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAABVElEQVR42jWQPUtCYRiGbz9OapCGfeDxUEYZKTS0nKE0IQUpaLEv+4DUWl1CygaJ/oBEQ2lBi1OTQjUE1iKBJ4KiKRKi1aHfcJ7e55Tv+l7cz3XfAL8R2L3L2Ajs2R6Dua4PX8r02htGUfJAFb9WdCBfxhqNn/i1ndsQbd1PUqzSR4G8hdxz0KwKooIyQ17CZvzU36x9XeiNdo3KrUPKPkdovjpIwYJJd6nQ0A8ZfG73LkSNdpVefup0/V2ko/cVSj6M0/Slg+QESBpACuzE58qtvAGdfeZo/22B1upjNHPloOE0yKagBBZnp6w2ayQdCCjzNEWLNzKp5xIp6yJRFiC3mxDi7MTnVkUSQ+GKgwLHIHcEZHFiG9IQVNGuGSxAZyc+x0kMeRLQ7aOiTLcowzvxBE7RjsXZSUn+JRmQCzFjnv9n5gm4nSTExdAlS49oCng70C9TDYyoJxj9ZwAAAABJRU5ErkJggg==`
+                }
+              ]}
             />
           </div>
           <div>

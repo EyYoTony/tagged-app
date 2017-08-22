@@ -7,7 +7,7 @@ const ProfileCard = confirmLogOut => profile => {
         <img
           src={profile.picture}
           className="br-100 h4 w4 dib ba b--black-05 pa2"
-          title="placeholder avatar"
+          alt="avatar"
         />
         <h1 className="f3 mb2">
           {profile.nickname}

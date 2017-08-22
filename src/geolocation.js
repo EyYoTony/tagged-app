@@ -1,6 +1,5 @@
 //This code was taken and modified from tripott - https://github.com/tripott/pro-log-fishing/blob/master/src/geolocation.js
 const getCurrentPosition = cb => props => {
-  let pos = {}
   let err = {}
   if (navigator.geolocation) {
     const timeoutVal = 10 * 1000 * 1000
